@@ -230,6 +230,11 @@ std::vector<Rule> parseRuleDirectory(const std::string& directoryPath) {
     return rules;
 }
 
+#include "rule_parser.h"
+#include <regex>
+#include <stdexcept>
+#include <cctype>
+
 // Simple base64 decoder (without external libraries)
 static unsigned char decodeBase64Char(char c) {
     if ('A' <= c && c <= 'Z') return c - 'A';
@@ -262,7 +267,6 @@ bool evaluateCondition(const ConditionNode* node, const std::string& text) {
     if (!node)
         return false;
     if (node->type == NodeType::LEAF) {
-        // Get the raw pattern.
         std::string pattern = node->value;
         bool isBase64 = false;
         bool isRegex = false;
@@ -282,7 +286,7 @@ bool evaluateCondition(const ConditionNode* node, const std::string& text) {
             pattern = pattern.substr(1, lastSlash - 1);
             isRegex = true;
         }
-        // If not explicitly marked as regex, treat the literal as a regex by escaping special characters.
+        // If not explicitly marked as regex, treat the literal as a regex that matches exactly.
         if (!isRegex) {
             std::string escaped;
             for (char c : pattern) {
@@ -298,14 +302,27 @@ bool evaluateCondition(const ConditionNode* node, const std::string& text) {
             flags |= std::regex::icase;
 
         try {
-            // If the pattern is base64 encoded, decode it first.
+            std::regex re(pattern, flags);
             if (isBase64) {
-                std::string decodedPattern = decodeBase64(pattern);
-                std::regex re(decodedPattern, flags);
-                return std::regex_search(text, re);
+                // Use a regex that optionally strips quotes from the candidate.
+                std::regex b64Regex("\"?([A-Za-z0-9+/]{4,}={0,2})\"?");
+                auto begin = std::sregex_iterator(text.begin(), text.end(), b64Regex);
+                auto end = std::sregex_iterator();
+                for (auto i = begin; i != end; ++i) {
+                    // Use the captured group (without surrounding quotes).
+                    std::string candidate = (*i)[1].str();
+                    try {
+                        std::string decoded = decodeBase64(candidate);
+                        if (std::regex_search(decoded, re))
+                            return true;
+                    }
+                    catch (const std::exception&) {
+                        continue;
+                    }
+                }
+                return false;
             }
             else {
-                std::regex re(pattern, flags);
                 return std::regex_search(text, re);
             }
         }
