@@ -76,7 +76,7 @@ name: <Rule Name> scope: <Scope> condition: (<Condition Expression>)
     ```
     name: Detect MessageBoxA with Hello world
     scope: basicblock
-    condition: (api:"/MessageBoxA/i" AND string:"b64:/Hello World/i")
+    condition: (api:"/MessageBoxA/i" AND string:"/Hello World/i")
     ```
 
 2. **Detect a function-level capability to capture screenshots:**
