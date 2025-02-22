@@ -88,6 +88,7 @@ name: <Rule Name> scope: <Scope> condition: (<Condition Expression>)
 
     ```
 
+
 ### TODO
 
 - [ ] **Support NOT Operator for Logics:**  
