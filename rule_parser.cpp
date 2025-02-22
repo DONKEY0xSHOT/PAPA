@@ -230,7 +230,7 @@ std::vector<Rule> parseRuleDirectory(const std::string& directoryPath) {
     return rules;
 }
 
-// A simple base64 decoder
+// Simple base64 decoder (without external libraries)
 static unsigned char decodeBase64Char(char c) {
     if ('A' <= c && c <= 'Z') return c - 'A';
     if ('a' <= c && c <= 'z') return c - 'a' + 26;
@@ -258,13 +258,10 @@ static std::string decodeBase64(const std::string& in) {
     return out;
 }
 
-// ---------- Condition evaluation ----------
-
 bool evaluateCondition(const ConditionNode* node, const std::string& text) {
     if (!node)
         return false;
     if (node->type == NodeType::LEAF) {
-
         // Get the raw pattern.
         std::string pattern = node->value;
         bool isBase64 = false;
@@ -285,9 +282,8 @@ bool evaluateCondition(const ConditionNode* node, const std::string& text) {
             pattern = pattern.substr(1, lastSlash - 1);
             isRegex = true;
         }
-        // If not explicitly marked as regex, treat the literal as a regex that simply matches the substring.
+        // If not explicitly marked as regex, treat the literal as a regex by escaping special characters.
         if (!isRegex) {
-            // Escape any regex special characters in the literal.
             std::string escaped;
             for (char c : pattern) {
                 if (std::strchr(".*+?^${}()|[]\\", c))
@@ -300,29 +296,16 @@ bool evaluateCondition(const ConditionNode* node, const std::string& text) {
         std::regex::flag_type flags = std::regex::ECMAScript;
         if (isCaseInsensitive)
             flags |= std::regex::icase;
+
         try {
-            std::regex re(pattern, flags);
+            // If the pattern is base64 encoded, decode it first.
             if (isBase64) {
-                // Look for potential base64 substrings in the text.
-                // This simple regex matches base64 groups (at least 4 chars long).
-                std::regex b64Regex("([A-Za-z0-9+/]{4})+={0,2}");
-                auto begin = std::sregex_iterator(text.begin(), text.end(), b64Regex);
-                auto end = std::sregex_iterator();
-                for (auto i = begin; i != end; ++i) {
-                    std::string candidate = i->str();
-                    try {
-                        std::string decoded = decodeBase64(candidate);
-                        if (std::regex_search(decoded, re))
-                            return true;
-                    }
-                    catch (const std::exception&) {
-                        // If candidate isn't valid base64, skip it.
-                        continue;
-                    }
-                }
-                return false;
+                std::string decodedPattern = decodeBase64(pattern);
+                std::regex re(decodedPattern, flags);
+                return std::regex_search(text, re);
             }
             else {
+                std::regex re(pattern, flags);
                 return std::regex_search(text, re);
             }
         }
