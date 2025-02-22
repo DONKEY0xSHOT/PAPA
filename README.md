@@ -87,3 +87,17 @@ name: <Rule Name> scope: <Scope> condition: (<Condition Expression>)
     condition: ((api:"GetWindowDC" OR api:"GetDC" OR api:"CreateDC") AND (api:"BitBlt" OR api:"GetDIBits")) OR (api:"System.Drawing.Graphics::CopyFromScreen")
 
     ```
+
+### TODO
+
+- [ ] **Support NOT Operator for Logics:**  
+  Implement the NOT logical operator in our rule DSL to allow users to exclude specific conditions from matching.
+
+- [ ] **Extend Encoding Support:**  
+  Expand the current base64 matching feature to include additional encoding formats (e.g., Base32, hex) for more robust detection.
+
+- [ ] **Export Results to JSON:**  
+  Add an option to output scan results in JSON format.
+
+- [ ] **Support CAPA Rules Syntax:**  
+  Prase CAPA-compatible rule syntax, making it possible to use existing CAPA rules.
