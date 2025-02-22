@@ -31,11 +31,11 @@ Ensure you have a C++17-compliant compiler installed along with the following de
 ### Basic Use
 
 The tool is run from the command line with the following syntax:
-PAPA.exe <PE file path> <rule directory> [--scan-only]
+PAPA.exe {PE file path} {rule directory} [--scan-only]
 
-- `<PE file path>`: Path to the Windows PE file you want to analyze.
-- `<rule directory>`: Directory containing rule files.
-- `[--scan-only]`: Optional flag to run in scan-only mode (only outputs the names of matched rules without printing the full disassembly).
+- `PE file path`: Path to the Windows PE file you want to analyze.
+- `rule directory`: Directory containing rule files.
+- `--scan-only`: Optional flag to run in scan-only mode (only outputs the names of matched rules without printing the full disassembly).
 
 ### Rule File Format and Writing Rules
 
