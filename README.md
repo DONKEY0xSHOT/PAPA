@@ -15,7 +15,7 @@ This design allows the tool to quickly and efficiently identify areas of interes
 
 ## Advantages
 
-- **Speed:** By focusing on disassembled code and leveraging efficient in-memory string and regex matching, this tool is much faster than many traditional dynamic analysis or full-featured reverse engineering tools.
+- **Speed:** By focusing on disassembled code and leveraging efficient in-memory string and regex matching, this tool is much faster than the original CAPA tool.
 - **Lightweight:** The project avoids heavy dependencies for rule parsing by using a custom DSL and only relies on well-established libraries (LIEF and Capstone) for PE parsing and disassembly.
 - **Flexibility:** Users can write custom rules to search at different scopes (file, function, basic block) and employ advanced matching techniques (regex with wildcards, case-insensitivity, and base64 decoding).
 - **Ease of Use:** The rule engine is designed to be user-friendly. New rules can be added simply by dropping text files into the rules directory without needing to recompile the tool.
