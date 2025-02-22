@@ -28,12 +28,10 @@ Ensure you have a C++17-compliant compiler installed along with the following de
 - **LIEF:** For parsing and analyzing PE files.
 - **Capstone:** For disassembling binary code.
 
-Follow the provided build instructions (e.g., via a provided Makefile, CMakeLists.txt, or Visual Studio project) to compile the tool.
-
 ### Basic Use
 
 The tool is run from the command line with the following syntax:
-CAPAAnalyzer.exe <PE file path> <rule directory> [--scan-only]
+PAPA.exe <PE file path> <rule directory> [--scan-only]
 
 - `<PE file path>`: Path to the Windows PE file you want to analyze.
 - `<rule directory>`: Directory containing rule files.
