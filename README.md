@@ -93,14 +93,20 @@ We currently only support rules that don't use the "match", "section", "offset" 
 
 ### TODO
 
-- [ ] **Support NOT Operator for Logics:**  
-  Implement the NOT logical operator in our rule DSL to allow users to exclude specific conditions from matching.
+- [ ] **Support Decompilation of Mupltiple Sections:**  
+  Decompile all of the sections which have execution permissions
 
-- [ ] **Extend Encoding Support:**  
-  Expand the current base64 matching feature to include additional encoding formats (e.g. base32, hex) for more robust detection.
+- [ ] **Extend Regex & Encoding Support:**  
+  Expand the current base64 matching feature to include additional encoding formats (e.g. base32, hex), in addition to full Regex support for more robust detection.
+
+- [ ] **Matching Other Rules as a Condition:**  
+  Require the matching of other rules as a condition in a rule, just like CAPA allows.
 
 - [ ] **Export Results to JSON:**  
   Add an option to output scan results in JSON format.
+
+- [ ] **Add more condition-scopes:**  
+  Support exports, section names, mnemonics, offsets, etc.
 
 - [ ] **Support CAPA Rules Syntax:**  
   Prase CAPA-compatible rule syntax, making it possible to use existing CAPA rules.
