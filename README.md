@@ -2,7 +2,7 @@
 
 ## Overview
 
-PAPA is a simple CAPA-like tool implemented in C++ that analyzes Windows Portable Executable (PE) files for specific capabilities. By disassembling the binary and scanning for strings, Windows API calls, and opcode patterns, the tool identifies indicators of various capabilities. It leverages a custom rule engine that uses a simple domain-specific language (DSL) to query disassembled code, making it an effective and lightweight alternative to more heavyweight analysis frameworks.
+PAPA is a minimalistic CAPA-like tool implemented in C++ that analyzes Windows Portable Executable (PE) files for specific capabilities. By disassembling the binary and scanning for strings, Windows API calls, and opcode patterns, the tool identifies indicators of various capabilities. It leverages a custom rule engine that uses a simple domain-specific language (DSL) to query disassembled code, making it an effective and lightweight alternative to more heavyweight analysis frameworks.
 
 ## Implementation
 
