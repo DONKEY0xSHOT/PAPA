@@ -91,7 +91,7 @@ PAPA has over 600 official rules, which are official CAPA rules that were modifi
 We currently only support rules that don't use the "match", "section", "offset" & "number" features of CAPA - hopefully these would be supported in the future. 
 
 
-### TODO
+### TODO (some welcome contributions):
 
 - [ ] **Support Decompilation of Mupltiple Sections:**  
   Decompile all of the sections which have execution permissions
